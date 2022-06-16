@@ -53,15 +53,16 @@
     <main>
 
         <div class="contact-box ">
-            <form>
+            <form id="contact-form">
                 <p class="contact-head">
                     <h3>CONTACT ME</h3>
                 </p>
-                <input type="text " class="inpute-field " placeholder="Your Name " required>
-                <input type="text " class="inpute-field " placeholder="Your Email " required>
-                <textarea type="text " class="inpute-field textarea-field " placeholder="Message " required></textarea>
-                <button type='button' class=" btn ">Send Message</button>
+                <input type="text" name="from_name" class="inpute-field " placeholder="Your Name " required>
+                <input type="text" name="email" class="inpute-field " placeholder="Your Email " required>
+                <textarea type="text" name="message" class="inpute-field textarea-field " placeholder="Message " required></textarea>
+                <button type="submit" style="cursor: pointer;" class=" btn ">Send Message</button>
             </form>
+             
         </div>
 
     </main>
@@ -95,6 +96,62 @@
         <p class="copyright">future coders @ Zuri_Training</p>
     </footer>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+      (function() {
+          // https://dashboard.emailjs.com/admin/account
+          emailjs.init('PURjd1gKy-uavu_rY');
+      })();
+  </script>
+  <script type="text/javascript">
+      window.onload = function() {
+          document.getElementById('contact-form').addEventListener('submit', function(event) {
+              event.preventDefault();
+              // generate a five digit number for the contact_number variable
+              // this.contact_number.value = Math.random() * 100000 | 0;
+              // these IDs from the previous steps
+              emailjs.sendForm('service_owhdnw3', 'template_a0eb1le', this)
+                  .then(function() {
+                    Swal.fire({
+                      title: 'Thank you!',
+    text: 'Your message has been sent',
+    imageUrl: 'https://res.cloudinary.com/dh2w0dqug/image/upload/v1654952110/crusifix/games/89032-victory-sign-baby-astronaut_mu1hle.gif',
+    imageWidth: 500,
+    imageHeight: 500,
+    imageAlt: 'Custom image',
+    timer: 4000,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading()
+      const b = Swal.getHtmlContainer().querySelector('b')
+      timerInterval = setInterval(() => {
+        b.textContent = Swal.getTimerLeft()
+      }, 100)
+    },
+    willClose: () => {
+      clearInterval(timerInterval)
+    }
+  }).then((result) => {
+    /* Read more about handling dismissals below */
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log('I was closed by the timer')
+    }
+  })
+                  }, function(error) {
+                    Swal.fire({
+                      title: 'Oh no!',
+    text: 'Something went wrong, please try again.',
+    imageUrl: 'https://res.cloudinary.com/dh2w0dqug/image/upload/v1654952402/crusifix/games/88338-crying-baby-astronaut_vhnldw.gif',
+    imageWidth: 400,
+    imageHeight: 200,
+    imageAlt: 'Custom image',
+  })
+                  });
+          });
+      }
+  </script>
 </body>
 
 </html>
